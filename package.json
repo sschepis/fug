@@ -1,7 +1,7 @@
 {
-  "name": "@sschepis/canvas-animator",
+  "name": "@sschepis/fug",
   "version": "0.1.4",
-  "description": "Animate canvases with ease",
+  "description": "A simple HTML layout library",
   "directories": {
     "test": "test"
   },

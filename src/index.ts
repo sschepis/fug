@@ -55,7 +55,7 @@ export class Fug {
   static regex = /([a-zA-Z0-9]+)(?:\s*\(([^)]*)\))?(?:\s*\[(.*)\])?/g
 
   static parse(code: string) {
-    const parsed = Fug.parseCode(code, Fug.regex)
+    const parsed = Fug.parseElement(code, Fug.regex)
     const controller: any = []
     const view: any = []
     parsed.forEach((node: { tag: any; attributes: any; children: any; }) => {
@@ -69,7 +69,7 @@ export class Fug {
     return { controller, view }
   }
 
-  static parseCode(code: string, regex: RegExp) {
+  static parseElement(code: string, regex: RegExp) {
     const parsed: any = []
     let match: any
     while ((match = regex.exec(code))) {
@@ -84,7 +84,7 @@ export class Fug {
   }
 
   static parseAttributes(attributes: any) {
-    const parsed = {}
+    const parsed: any = {}
     if (attributes) {
       attributes.split(';').forEach((attribute: { split: (arg0: string) => [any, any] }) => {
         const [key, value] = attribute.split('=')
@@ -96,7 +96,7 @@ export class Fug {
 
   static parseChildren(children: any) {
     if (children) {
-      return Fug.parseCode(children, Fug.regex)
+      return Fug.parseElement(children, Fug.regex)
     }
     return []
   }

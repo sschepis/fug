@@ -1,0 +1,2 @@
+#!/usr/bin/env node
+node /usr/local/lib/node_modules/fug/index.js "$@"
