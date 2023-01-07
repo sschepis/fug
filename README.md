@@ -15,16 +15,10 @@ header (margin-left=10px)[
 ]
 container(name=userEmail,display=flex,flex-direction=column)[
   row[
-    column(width=50%)[
-      textbox(id=name,placeholder='Name')
-    ]
-    column(width=50%)[
-      textbox(id=emailplaceholder='Email')
-    ]
+    column(width=50%)[textbox(id=name,placeholder='Name')]
+    column(width=50%)[textbox(id=emailplaceholder='Email')]
   ]
-  row[
-    button(text='Submit',event=submitEmail)
-  ]
+  row[button(text='Submit',event=submitEmail)]
 ]
 ```
 
