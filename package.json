@@ -1,7 +1,7 @@
 {
   "name": "@sschepis/fug",
-  "version": "0.1.4",
-  "description": "A simple HTML layout library",
+  "version": "0.0.1",
+  "description": "A markup language for laying out svelte components",
   "directories": {
     "test": "test"
   },

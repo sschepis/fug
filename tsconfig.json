@@ -10,6 +10,6 @@
     },
     "include": [
       "test",
-      "src",
+      "src", "test/fug-parser.test.ts_",
     ],
   }

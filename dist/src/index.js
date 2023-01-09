@@ -1,100 +1,29 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Fug = void 0;
-class Fug {
-    static compile(code, options) {
-        const { controller, view } = Fug.parse(code);
-        function generateScriptAndStyle(controller, javascriptOptions) {
-            const { name, ...style } = javascriptOptions;
-            const styleString = (style) => {
-                return Object.keys(style)
-                    .map((key) => `${key}: ${style[key]}`)
-                    .join('; ');
-            };
-            const scriptString = `<script>
-                import { createEventDispatcher } from 'svelte'
-                const dispatch = createEventDispatcher()
-                export let ${name} = {
-                    ${controller.join('')}
-                }
-                let ${name}Defaults = {
-                    ${controller.join('')}
-                }
-                onMount(() => {
-                    ${name} = { ...${name}Defaults, ...${name} }
-                })
-                function ${name}() {
-                    dispatch('${name}', ${name})
-                }
-            </script>`;
-            return {
-                script: scriptString,
-                style: `<style name = "${name}">${styleString(style)}</style>`
-            };
-        }
-        const { script, style } = generateScriptAndStyle(controller, options);
-        return {
-            script,
-            style,
-            view: view.join('')
-        };
-    }
-    static generateAttributes(attributes) {
-        return Object.keys(attributes)
-            .map((key) => `${key}="${attributes[key]}"`)
-            .join(' ');
-    }
-    static generateChildren(children) {
-        if (children) {
-            return children.join('');
-        }
-        return '';
-    }
-    static parse(code) {
-        const parsed = Fug.parseElement(code, Fug.regex);
-        const controller = [];
-        const view = [];
-        parsed.forEach((node) => {
-            const { tag, attributes, children } = node;
-            if (tag === 'style') {
-                controller.push(`${attributes.name}: ''`);
-            }
-            else {
-                view.push(`<${tag} ${Fug.generateAttributes(attributes)}>${Fug.generateChildren(children)}</${tag}>`);
-            }
-        });
-        return { controller, view };
-    }
-    static parseElement(code, regex) {
-        const parsed = [];
-        let match;
-        while ((match = regex.exec(code))) {
-            const [full, tag, attributes, children] = match;
-            parsed.push({
-                tag,
-                attributes: Fug.parseAttributes(attributes),
-                children: Fug.parseChildren(children)
-            });
-        }
-        return parsed;
-    }
-    static parseAttributes(attributes) {
-        const parsed = {};
-        if (attributes) {
-            attributes.split(';').forEach((attribute) => {
-                const [key, value] = attribute.split('=');
-                parsed[key] = value;
-            });
-        }
-        return parsed;
-    }
-    static parseChildren(children) {
-        if (children) {
-            return Fug.parseElement(children, Fug.regex);
-        }
-        return [];
+exports.renderers = exports.compile = exports.FugRenderers = exports.Fug = void 0;
+const parser_1 = __importDefault(require("./parser"));
+exports.Fug = parser_1.default;
+const renderer_1 = require("./renderer");
+Object.defineProperty(exports, "FugRenderers", { enumerable: true, get: function () { return renderer_1.FugRenderers; } });
+Object.defineProperty(exports, "renderers", { enumerable: true, get: function () { return renderer_1.renderers; } });
+const fs_1 = __importDefault(require("fs"));
+// import all the renderers from the renderers directory
+const files = fs_1.default.readdirSync('./src/renderers');
+for (const file of files) {
+    if (file.endsWith('.ts')) {
+        const renderer = require(`./renderers/${file}`);
+        renderer_1.renderers.add(new renderer[Object.keys(renderer)[0]]());
     }
 }
-exports.Fug = Fug;
-// parse fug code into a tree
-Fug.regex = /([a-zA-Z0-9]+)(?:\s*\(([^)]*)\))?(?:\s*\[(.*)\])?/g;
+function compile(fugLayout, rendererType) {
+    const fug = new parser_1.default(fugLayout);
+    const renderer = renderer_1.renderers.get(rendererType);
+    if (renderer) {
+        return renderer.render(fug.element);
+    }
+    throw new Error(`Renderer ${rendererType} not found`);
+}
+exports.compile = compile;

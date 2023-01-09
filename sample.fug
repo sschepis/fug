@@ -1,0 +1,93 @@
+header (margin-left=10px)[
+    logo(width=40px,length=40px,margin=10px)[
+        image(src=http://foo.bar/img.png),
+    ],
+],
+navbar (display=flex,flex-direction=column)[
+    row[
+        column(width=50%)[
+            link(text='Home',href='http://foo.bar/home'),
+        ],
+        column(width=50%)[
+            link(text='About',href='http://foo.bar/about'),
+        ],
+    ],
+    row[
+        column(width=50%)[
+            link(text='Contact',href='http://foo.bar/contact'),
+        ],
+        column(width=50%)[
+            link(text='Blog',href='http://foo.bar/blog'),
+        ],
+    ],
+],
+feature (display=flex,flex-direction=column)[
+    row[
+        column(width=50%)[
+            image(src=http://foo.bar/img.png),
+        ],
+        column(width=50%)[
+            title(text='Feature Title'),
+            description(text='Feature Description'),
+        ],
+    ],
+],
+three-column (display=flex,flex-direction=column)[
+    row[
+        column(width=33%)[
+            image(src=http://foo.bar/img.png),
+            title(text='Column Title'),
+            description(text='Column Description'),
+        ],
+        column(width=33%)[
+            image(src=http://foo.bar/img.png),
+            title(text='Column Title'),
+            description(text='Column Description'),
+        ],
+        column(width=33%)[
+            image(src=http://foo.bar/img.png),
+            title(text='Column Title'),
+            description(text='Column Description'),
+        ],
+    ],
+],
+about-team (display=flex,flex-direction=column)[
+    row[
+        column(width=50%)[
+            image(src=http://foo.bar/img.png),
+        ],
+        column(width=50%)[
+            title(text='About Team Title'),
+            description(text='About Team Description'),
+        ],
+    ],
+],
+contact-us (display=flex,flex-direction=column)[
+    row[
+        column(width=50%)[
+            title(text='Contact Us Title'),
+            description(text='Contact Us Description'),
+        ],
+        column(width=50%)[
+            textbox(id=name,placeholder='Name'),
+            textbox(id=email,placeholder='Email'),
+            textbox(id=subject,placeholder='Subject'),
+            textbox(id=message,placeholder='Message'),
+            button(text='Submit',event=submitContact),
+        ],
+    ],
+],
+footer (display=flex,flex-direction=column)[
+    row[
+        column(width=50%)[
+            title(text='Footer Title'),
+            description(text='Footer Description'),
+        ],
+        column(width=50%)[
+            link(text='Home',href='http://foo.bar/home'),
+            link(text='About',href='http://foo.bar/about'),
+            link(text='Contact',href='http://foo.bar/contact'),
+            link(text='Blog',href='http://foo.bar/blog'),
+        ],
+    ],
+],
